@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    {% include 'categories.html' %}
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    {% include 'items.html' %}
+  </div>
+</div>
+{% endblock %}

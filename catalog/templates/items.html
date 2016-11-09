@@ -1,0 +1,15 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Latest Items</h3>
+  </div>
+  <div class="panel-body">
+    <div class="list-group">
+      {% for item in items %}
+        <a href="#" class="list-group-item">
+          {{item.name}} <span class="text-muted">({{item.category.name}})</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
