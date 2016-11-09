@@ -38,7 +38,8 @@ def item_view(item_id):
 
 @app.route('/catalog/item/<int:item_id>/edit')
 def item_edit(item_id):
-    return 'edit item %s' % item_id
+    item = session.query(Item).filter_by(id=item_id).one()
+    return render_template('itemForm.html', categories=categories, item=item, action='Edit')
 
 
 @app.route('/catalog/item/<int:item_id>/delete')
