@@ -6,7 +6,7 @@
   <div class="panel-body">
     <div class="list-group">
       {% for item in items %}
-        <a href="#" class="list-group-item">
+        <a href="{{url_for('item_view', item_id=item.id)}}" class="list-group-item">
           {{item.name}} <span class="text-muted">({{item.category.name}})</span>
         </a>
       {% endfor %}
