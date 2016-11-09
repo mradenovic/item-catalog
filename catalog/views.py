@@ -32,7 +32,8 @@ def item_new():
 
 @app.route('/catalog/item/<int:item_id>')
 def item_view(item_id):
-    return 'view %s' % item_id
+    item = session.query(Item).filter_by(id=item_id).one()
+    return render_template('itemView.html', item=item)
 
 
 @app.route('/catalog/item/<int:item_id>/edit')
