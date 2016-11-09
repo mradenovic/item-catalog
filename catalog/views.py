@@ -19,8 +19,10 @@ def catalog_jsonified():
 
 
 @app.route('/catalog/category/<int:category_id>')
-def category(category_id):
-    return 'category handler for %s' % category_id
+def category_view(category_id):
+    items = session.query(Item).filter_by(category_id=category_id).order_by(Item.name)
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('catalog.html', categories=categories, items=items, items_title=category.name)
 
 
 @app.route('/catalog/item/new')
