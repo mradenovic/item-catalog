@@ -58,8 +58,14 @@ def item_view(item_id):
     return render_template('itemView.html', item=item)
 
 
-@app.route('/catalog/item/<int:item_id>/edit')
+@app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'POST'])
 def item_edit(item_id):
+    if request.method == 'POST':
+        return item_edit_post(item_id)
+    else:
+        return item_edit_get(item_id)
+
+def item_edit_get(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     params = {}
     params['categories'] = categories
@@ -67,6 +73,17 @@ def item_edit(item_id):
     params['action'] = 'Edit'
     params['cancel_url'] = url_for('item_view', item_id=item_id)
     return render_template('itemForm.html', **params)
+
+def item_edit_post(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    item.name = request.form['name']
+    item.description = request.form['description']
+    item.price = request.form['price']
+    item.category_id = request.form['category_id']
+    session.add(item)
+    session.commit()
+    # flash('New Menu %s Item Successfully Created' % (newItem.name))
+    return redirect(url_for('item_view', item_id=item.id))
 
 
 @app.route('/catalog/item/<int:item_id>/delete')
