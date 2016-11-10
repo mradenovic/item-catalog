@@ -9,7 +9,7 @@ categories = session.query(Category).order_by(Category.name.desc())
 @app.route('/')
 @app.route('/catalog')
 def catalog():
-    items = session.query(Item).order_by(Item.created_at).limit(10)
+    items = session.query(Item).order_by(Item.created_at.desc()).limit(10)
     return render_template('catalog.html', categories=categories, items=items, items_title='Latest')
 
 
