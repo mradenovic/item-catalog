@@ -44,7 +44,12 @@ def item_view(item_id):
 @app.route('/catalog/item/<int:item_id>/edit')
 def item_edit(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
-    return render_template('itemForm.html', categories=categories, item=item, action='Edit')
+    params = {}
+    params['categories'] = categories
+    params['item'] = item
+    params['action'] = 'Edit'
+    params['cancel_url'] = url_for('item_view', item_id=item_id)
+    return render_template('itemForm.html', **params)
 
 
 @app.route('/catalog/item/<int:item_id>/delete')
