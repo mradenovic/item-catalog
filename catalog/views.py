@@ -1,6 +1,6 @@
 from catalog import app
 from db import session
-from flask import render_template, url_for
+from flask import render_template, url_for, request, redirect
 from db_setup import Category, Item, User
 
 
@@ -25,14 +25,26 @@ def category_view(category_id):
     return render_template('catalog.html', categories=categories, items=items, items_title=category.name)
 
 
-@app.route('/catalog/item/new')
+@app.route('/catalog/item/new', methods=['GET', 'POST'])
 def item_new():
-    params = {}
-    params['categories'] = categories
-    params['item'] = None
-    params['action'] = 'New'
-    params['cancel_url'] = url_for('catalog')
-    return render_template('itemForm.html', **params)
+    if request.method == 'POST':
+        params = {}
+        params['name'] = request.form['name']
+        params['description'] = request.form['description']
+        params['price'] = request.form['price']
+        params['category_id'] = request.form['category_id']
+        item = Item(**params)
+        session.add(item)
+        session.commit()
+        # flash('New Menu %s Item Successfully Created' % (newItem.name))
+        return redirect(url_for('item_view', item_id=item.id))
+    else:
+        params = {}
+        params['categories'] = categories
+        params['item'] = None
+        params['action'] = 'New'
+        params['cancel_url'] = url_for('catalog')
+        return render_template('itemForm.html', **params)
 
 
 @app.route('/catalog/item/<int:item_id>')
