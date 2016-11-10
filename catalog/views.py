@@ -1,6 +1,6 @@
 from catalog import app
 from db import session
-from flask import render_template
+from flask import render_template, url_for
 from db_setup import Category, Item, User
 
 
@@ -27,7 +27,12 @@ def category_view(category_id):
 
 @app.route('/catalog/item/new')
 def item_new():
-    return 'new item'
+    params = {}
+    params['categories'] = categories
+    params['item'] = None
+    params['action'] = 'New'
+    params['cancel_url'] = url_for('catalog')
+    return render_template('itemForm.html', **params)
 
 
 @app.route('/catalog/item/<int:item_id>')

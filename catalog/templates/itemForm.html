@@ -25,7 +25,7 @@
     <label for="price">Price</label>
     <input type="text" class="form-control" id="price" name="price" placeholder="Price" value="{{item.price}}">
   </div>
-  <a class="btn btn-default" href="{{ url_for('item_view',item_id = item.id)}}">Cancel</a>
+  <a class="btn btn-default" href="{{cancel_url}}">Cancel</a>
   <input type='submit' class="btn btn-danger" value = 'Save'>
 </form>
 {% endblock %}
