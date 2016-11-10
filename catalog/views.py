@@ -28,24 +28,29 @@ def category_view(category_id):
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
 def item_new():
     if request.method == 'POST':
-        params = {}
-        params['name'] = request.form['name']
-        params['description'] = request.form['description']
-        params['price'] = request.form['price']
-        params['category_id'] = request.form['category_id']
-        item = Item(**params)
-        session.add(item)
-        session.commit()
-        # flash('New Menu %s Item Successfully Created' % (newItem.name))
-        return redirect(url_for('item_view', item_id=item.id))
+        return item_new_post()
     else:
-        params = {}
-        params['categories'] = categories
-        params['item'] = None
-        params['action'] = 'New'
-        params['cancel_url'] = url_for('catalog')
-        return render_template('itemForm.html', **params)
+        return item_new_get()
 
+def item_new_get():
+    params = {}
+    params['categories'] = categories
+    params['item'] = None
+    params['action'] = 'New'
+    params['cancel_url'] = url_for('catalog')
+    return render_template('itemForm.html', **params)
+
+def item_new_post():
+    params = {}
+    params['name'] = request.form['name']
+    params['description'] = request.form['description']
+    params['price'] = request.form['price']
+    params['category_id'] = request.form['category_id']
+    item = Item(**params)
+    session.add(item)
+    session.commit()
+    # flash('New Menu %s Item Successfully Created' % (newItem.name))
+    return redirect(url_for('item_view', item_id=item.id))
 
 @app.route('/catalog/item/<int:item_id>')
 def item_view(item_id):
