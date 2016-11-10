@@ -1,0 +1,5 @@
+<form action="{{ url_for('item_delete', item_id=item.id)}}" method = 'post'>
+  Do you really want to delete this item?
+  <a class="btn btn-default" href="{{ url_for('item_view',item_id=item.id)}}">Cancel</a>
+  <input type='submit' class="btn btn-danger" value = 'Delete'>
+</form>

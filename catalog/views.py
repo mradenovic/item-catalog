@@ -54,4 +54,5 @@ def item_edit(item_id):
 
 @app.route('/catalog/item/<int:item_id>/delete')
 def item_delete(item_id):
-    return 'delete %s' % item_id
+    item = session.query(Item).filter_by(id=item_id).one()
+    return render_template('itemView.html', item=item, delete=True)

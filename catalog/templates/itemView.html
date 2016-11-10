@@ -9,10 +9,14 @@
     </div>
     <div class="panel-body">
       {{item.description}}
+      {% if delete %}
+        {% include 'itemDeleteForm.html' %}
+      {% else %}
       <div class="">
         <a class="text-warning" href="{{url_for('item_edit', item_id=item.id)}}" role="button">Edit</a>
         <a class="text-danger" href="{{url_for('item_delete', item_id=item.id)}}" role="button">Delete</a>
       </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
