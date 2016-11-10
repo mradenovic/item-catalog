@@ -86,7 +86,19 @@ def item_edit_post(item_id):
     return redirect(url_for('item_view', item_id=item.id))
 
 
-@app.route('/catalog/item/<int:item_id>/delete')
+@app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'POST'])
 def item_delete(item_id):
+    if request.method == 'POST':
+        return item_delete_post(item_id)
+    else:
+        return item_delete_get(item_id)
+
+def item_delete_get(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('itemView.html', item=item, delete=True)
+
+def item_delete_post(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    session.delete(item)
+    session.commit()
+    return redirect('catalog')
