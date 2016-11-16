@@ -2,6 +2,7 @@ from catalog import app
 from db import session
 from flask import render_template, url_for, request, redirect
 from db_setup import Category, Item, User
+from oauthlib import authenticate
 
 
 categories = session.query(Category).order_by(Category.name.desc())
@@ -26,6 +27,7 @@ def category_view(category_id):
 
 
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
+@authenticate
 def item_new():
     if request.method == 'POST':
         return item_new_post()
@@ -59,6 +61,7 @@ def item_view(item_id):
 
 
 @app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'POST'])
+@authenticate
 def item_edit(item_id):
     if request.method == 'POST':
         return item_edit_post(item_id)
@@ -87,6 +90,7 @@ def item_edit_post(item_id):
 
 
 @app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'POST'])
+@authenticate
 def item_delete(item_id):
     if request.method == 'POST':
         return item_delete_post(item_id)
