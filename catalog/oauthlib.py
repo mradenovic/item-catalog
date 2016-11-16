@@ -45,7 +45,7 @@ def authorized():
         )
     session['google_token'] = (resp['access_token'], '')
     session['user'] = google.get('userinfo').data
-    return jsonify(session['user'])
+    return redirect(url_for('catalog'))
 
 
 @google.tokengetter
