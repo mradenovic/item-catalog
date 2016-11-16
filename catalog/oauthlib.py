@@ -31,6 +31,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('google_token', None)
+    session.pop('user', None)
     return redirect(url_for('catalog'))
 
 
