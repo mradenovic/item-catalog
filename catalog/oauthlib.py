@@ -39,7 +39,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('google_token', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('catalog'))
 
 
 @app.route('/login/authorized')
