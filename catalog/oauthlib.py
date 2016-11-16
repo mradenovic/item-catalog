@@ -51,8 +51,8 @@ def authorized():
             request.args['error_description']
         )
     session['google_token'] = (resp['access_token'], '')
-    me = google.get('userinfo')
-    return jsonify({"data": me.data})
+    session['user'] = google.get('userinfo').data
+    return jsonify(session['user'])
 
 
 @google.tokengetter
