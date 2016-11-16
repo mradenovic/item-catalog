@@ -23,14 +23,6 @@ google = oauth.remote_app(
 )
 
 
-@app.route('/')
-def index():
-    if 'google_token' in session:
-        me = google.get('userinfo')
-        return jsonify({"data": me.data})
-    return redirect(url_for('login'))
-
-
 @app.route('/login')
 def login():
     return google.authorize(callback=url_for('authorized', _external=True))
