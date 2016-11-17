@@ -4,7 +4,7 @@ import config
 from flask import Flask, redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 from db import session as db
-from db_setup import User
+from db_setup import User, Item
 from functools import wraps
 
 
@@ -92,5 +92,16 @@ def authenticate(f):
         if 'user' not in session:
             session['next'] = request.url
             return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def authorize(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        item_id = kwargs['item_id']
+        item = db.query(Item).filter_by(id=item_id).one()
+        user_id = get_user_id(session)
+        if item.user_id != user_id:
+            return 'Not owner'
         return f(*args, **kwargs)
     return decorated_function
