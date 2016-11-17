@@ -35,6 +35,7 @@ def login():
 def logout():
     session.pop('google_token', None)
     session.pop('user', None)
+    session.pop('next', None)
     return redirect(url_for('catalog'))
 
 
@@ -50,7 +51,11 @@ def authorized():
     session['user'] = google.get('userinfo').data
 
     user_id = get_user_id(session)
-    return redirect(url_for('catalog'))
+    if 'next' in session:
+        next_url = session['next']
+    else:
+        next_url = None
+    return redirect(next_url or url_for('catalog'))
 
 
 @google.tokengetter
@@ -85,6 +90,7 @@ def authenticate(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user' not in session:
-            return redirect(url_for('login', next=request.url))
+            session['next'] = request.url
+            return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
