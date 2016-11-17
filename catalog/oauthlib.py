@@ -2,6 +2,7 @@ from catalog import app
 import config
 
 from flask import Flask, redirect, url_for, session, request, jsonify
+from flask import flash
 from flask_oauthlib.client import OAuth
 from db import session as db
 from db_setup import User, Item
@@ -102,6 +103,7 @@ def authorize(f):
         item = db.query(Item).filter_by(id=item_id).one()
         user_id = get_user_id(session)
         if item.user_id != user_id:
-            return 'Not owner'
+            flash('Only owner can perform this action!', 'warning')
+            return redirect(url_for('item_view', item_id=item_id))
         return f(*args, **kwargs)
     return decorated_function
