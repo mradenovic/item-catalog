@@ -105,6 +105,7 @@ def item_delete(item_id):
 
 def item_delete_get(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
+    flash('<strong>Warning!</strong> This action can not be reverted!', 'danger')
     return render_template('itemView.html', item=item, delete=True)
 
 def item_delete_post(item_id):
