@@ -55,7 +55,7 @@ def item_new_post():
     item = Item(**params)
     session.add(item)
     session.commit()
-    flash('New Item <strong>%s</strong> Successfully Created' % (item.name), 'success')
+    flash('New Item <strong>%s</strong> Successfully Created!' % (item.name), 'success')
     return redirect(url_for('item_view', item_id=item.id))
 
 @app.route('/catalog/item/<int:item_id>')
@@ -105,11 +105,12 @@ def item_delete(item_id):
 
 def item_delete_get(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
-    flash('<strong>Warning!</strong> This action can not be reverted!', 'danger')
+    flash('<strong>Danger!</strong> This action can not be reverted!', 'danger')
     return render_template('itemView.html', item=item, delete=True)
 
 def item_delete_post(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     session.delete(item)
     session.commit()
+    flash('Item <strong>%s</strong> Successfully Deleted'% item.name, 'success')
     return redirect('catalog')

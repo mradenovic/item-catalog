@@ -103,7 +103,7 @@ def authorize(f):
         item = db.query(Item).filter_by(id=item_id).one()
         user_id = get_user_id(session)
         if item.user_id != user_id:
-            flash('<strong>Warning</strong>Only owner can perform this action!', 'warning')
+            flash('<strong>Warning!</strong> Only owner can perform this action!', 'warning')
             return redirect(url_for('item_view', item_id=item_id))
         return f(*args, **kwargs)
     return decorated_function
