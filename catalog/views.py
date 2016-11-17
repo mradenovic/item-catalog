@@ -65,8 +65,8 @@ def item_view(item_id):
 
 
 @app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'POST'])
-@authorize
 @authenticate
+@authorize
 def item_edit(item_id):
     if request.method == 'POST':
         return item_edit_post(item_id)
@@ -95,8 +95,8 @@ def item_edit_post(item_id):
 
 
 @app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'POST'])
-@authorize
 @authenticate
+@authorize
 def item_delete(item_id):
     if request.method == 'POST':
         return item_delete_post(item_id)
