@@ -90,7 +90,7 @@ def item_edit_post(item_id):
     item.category_id = request.form['category_id']
     session.add(item)
     session.commit()
-    # flash('New Menu %s Item Successfully Created' % (newItem.name))
+    flash('Item <strong>%s</strong> Successfully Updated!' % (item.name), 'success')
     return redirect(url_for('item_view', item_id=item.id))
 
 
