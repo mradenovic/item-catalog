@@ -1,8 +1,10 @@
 from catalog import app
 from db import session
 from flask import render_template, url_for, request, redirect
+from flask import session as login_session
 from db_setup import Category, Item, User
 from oauthlib import authenticate, authorize
+from oauthlib import get_user_id
 
 
 categories = session.query(Category).order_by(Category.name.desc())
@@ -48,6 +50,7 @@ def item_new_post():
     params['description'] = request.form['description']
     params['price'] = request.form['price']
     params['category_id'] = request.form['category_id']
+    params['user_id'] = get_user_id(login_session)
     item = Item(**params)
     session.add(item)
     session.commit()
