@@ -1,6 +1,11 @@
 {% if 'google_token' in session %}
   <li><a href="{{url_for('item_new')}}">New Item</a></li>
-  <li class="navbar-text">{{session['user']['email']}}</li>
+  <li>
+    <a href="{{url_for('login')}}">
+      {{session['user']['email']}}
+      <img src="{{session['user']['picture']}}" class="avatar img-responsive img-circle pull-right">
+    </a>
+  </li>
   <li><a href="{{url_for('logout')}}">Log Out</a></li>
 {% else %}
   <li><a href="{{url_for('login')}}">Log In</a></li>
