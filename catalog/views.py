@@ -2,6 +2,7 @@ from catalog import app
 from db import session
 from flask import render_template, url_for, request, redirect
 from flask import session as login_session
+from flask import flash
 from db_setup import Category, Item, User
 from oauthlib import authenticate, authorize
 from oauthlib import get_user_id
@@ -54,7 +55,7 @@ def item_new_post():
     item = Item(**params)
     session.add(item)
     session.commit()
-    # flash('New Menu %s Item Successfully Created' % (newItem.name))
+    flash('New Item %s Successfully Created' % (item.name), 'success')
     return redirect(url_for('item_view', item_id=item.id))
 
 @app.route('/catalog/item/<int:item_id>')
