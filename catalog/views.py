@@ -55,7 +55,7 @@ def item_new_post():
     item = Item(**params)
     session.add(item)
     session.commit()
-    flash('New Item %s Successfully Created' % (item.name), 'success')
+    flash('New Item <strong>%s</strong> Successfully Created' % (item.name), 'success')
     return redirect(url_for('item_view', item_id=item.id))
 
 @app.route('/catalog/item/<int:item_id>')
