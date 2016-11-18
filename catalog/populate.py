@@ -26,7 +26,7 @@ session.add(User1)
 session.commit()
 
 # Menu for UrbanBurger
-category1 = Category(user_id=1, name="Urban Burger")
+category1 = Category(user_id=1, name="Soccer")
 
 session.add(category1)
 session.commit()
@@ -88,7 +88,7 @@ session.commit()
 
 
 # Menu for Super Stir Fry
-category2 = Category(user_id=1, name="Super Stir Fry")
+category2 = Category(user_id=1, name="Basketball")
 
 session.add(category2)
 session.commit()
@@ -132,7 +132,7 @@ session.commit()
 
 
 # Menu for Panda Garden
-category1 = Category(user_id=1, name="Panda Garden")
+category1 = Category(user_id=1, name="Baseball")
 
 session.add(category1)
 session.commit()
@@ -170,7 +170,7 @@ session.commit()
 
 
 # Menu for Thyme for that
-category1 = Category(user_id=1, name="Thyme for That Vegetarian Cuisine ")
+category1 = Category(user_id=1, name="Frisbee ")
 
 session.add(category1)
 session.commit()
@@ -214,7 +214,7 @@ session.commit()
 
 
 # Menu for Tony's Bistro
-category1 = Category(user_id=1, name="Tony\'s Bistro ")
+category1 = Category(user_id=1, name="Snowboarding")
 
 session.add(category1)
 session.commit()
@@ -252,7 +252,7 @@ session.commit()
 
 
 # Menu for Andala's
-category1 = Category(user_id=1, name="Andala\'s")
+category1 = Category(user_id=1, name="Rock Climbing")
 
 session.add(category1)
 session.commit()
@@ -290,7 +290,7 @@ session.commit()
 
 
 # Menu for Auntie Ann's
-category1 = Category(user_id=1, name="Auntie Ann\'s Diner' ")
+category1 = Category(user_id=1, name="Foosball' ")
 
 session.add(category1)
 session.commit()
@@ -340,7 +340,7 @@ session.commit()
 
 
 # Menu for Cocina Y Amor
-category1 = Category(user_id=1, name="Cocina Y Amor ")
+category1 = Category(user_id=1, name="Skating")
 
 session.add(category1)
 session.commit()
@@ -359,7 +359,7 @@ session.add(item2)
 session.commit()
 
 
-category1 = Category(user_id=1, name="State Bird Provisions")
+category1 = Category(user_id=1, name="Hockey")
 session.add(category1)
 session.commit()
 
