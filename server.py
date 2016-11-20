@@ -1,5 +1,4 @@
 from catalog import app
-from catalog import config
 
 
 if __name__ == '__main__':
