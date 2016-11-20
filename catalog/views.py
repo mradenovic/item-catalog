@@ -22,6 +22,12 @@ def catalog_jsonified():
     return jsonify(Category=[i.serialize for i in categories])
 
 
+@app.route('/catalog/item/<int:item_id>/json')
+def item_jsonfied(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    return jsonify(Item=item.serialize)
+
+
 @app.route('/catalog/category/<int:category_id>')
 def category_view(category_id):
     items = session.query(Item).filter_by(category_id=category_id).order_by(Item.name)
