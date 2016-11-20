@@ -1,6 +1,6 @@
 from catalog import app
 from db import session
-from flask import render_template, url_for, request, redirect
+from flask import render_template, url_for, request, redirect, jsonify
 from flask import session as login_session
 from flask import flash
 from db_setup import Category, Item, User
@@ -19,7 +19,7 @@ def catalog():
 
 @app.route('/catalog.json')
 def catalog_jsonified():
-    return 'catalog jsonified'
+    return jsonify(Category=[i.serialize for i in categories])
 
 
 @app.route('/catalog/category/<int:category_id>')

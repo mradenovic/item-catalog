@@ -32,6 +32,7 @@ class Category(Base):
         return {
             'name': self.name,
             'id': self.id,
+            'Item': [i.serialize  for i in self.items]
         }
 
 
@@ -52,11 +53,11 @@ class Item(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
+            'category': self.category.name,
+            'id': self.id,
             'name': self.name,
             'description': self.description,
-            'id': self.id,
-            'price': self.price,
-            'created_at': self.created_at,
+            'price': self.price
         }
 
 
