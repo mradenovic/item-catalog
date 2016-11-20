@@ -4,8 +4,8 @@ from flask import render_template, url_for, request, redirect
 from flask import session as login_session
 from flask import flash
 from db_setup import Category, Item, User
-from oauthlib import authenticate, authorize
-from oauthlib import get_user_id
+from auth import authenticate, authorize
+from auth import get_user_id
 
 
 categories = session.query(Category).order_by(Category.name.desc())
