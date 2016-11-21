@@ -1,3 +1,9 @@
+'''Project: Item catalog
+
+Item Catalog is the fifth project built during completion of the Udacity's
+Nanodegree program Full Stack Web Developer. Run this file to start the server.
+'''
+
 from catalog import app
 
 

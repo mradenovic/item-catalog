@@ -1,3 +1,11 @@
+
+'''Populate database with demo data.
+
+Run this file to populate database with demo data before running the server.
+The file is borrowed from Udacity's Restaurant Menu application, and is mixing,
+very unintelligently, sports and foods.
+'''
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 

@@ -1,3 +1,5 @@
+'''Create and setup database models'''
+
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -9,6 +11,8 @@ Base = declarative_base()
 
 
 class User(Base):
+    '''Database model representing user'''
+
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
@@ -18,6 +22,8 @@ class User(Base):
 
 
 class Category(Base):
+    '''Database model representing item category'''
+
     __tablename__ = 'category'
 
     id = Column(Integer, primary_key=True)
@@ -37,6 +43,8 @@ class Category(Base):
 
 
 class Item(Base):
+    '''Database model representing item'''
+
     __tablename__ = 'item'
 
     name = Column(String(80), nullable=False)

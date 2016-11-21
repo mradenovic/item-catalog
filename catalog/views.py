@@ -1,3 +1,5 @@
+'''Flask app views.'''
+
 from catalog import app
 from db import session
 from flask import render_template, url_for, request, redirect, jsonify
@@ -9,6 +11,7 @@ from auth import get_user_id
 
 
 categories = session.query(Category).order_by(Category.name.desc())
+'''Imutable global category list'''
 
 @app.route('/')
 @app.route('/catalog')
@@ -50,6 +53,8 @@ def item_new():
         return item_new_get()
 
 def item_new_get():
+    '''item_new GET handler'''
+
     params = {}
     params['categories'] = categories
     params['item'] = None
@@ -58,6 +63,8 @@ def item_new_get():
     return render_template('itemForm.html', **params)
 
 def item_new_post():
+    '''item_new POST handler'''
+
     params = {}
     params['name'] = request.form['name']
     params['description'] = request.form['description']
@@ -86,6 +93,8 @@ def item_edit(item_id):
         return item_edit_get(item_id)
 
 def item_edit_get(item_id):
+    '''item_edit GET handler'''
+
     item = session.query(Item).filter_by(id=item_id).one()
     params = {}
     params['categories'] = categories
@@ -95,6 +104,8 @@ def item_edit_get(item_id):
     return render_template('itemForm.html', **params)
 
 def item_edit_post(item_id):
+    '''item_edit POST handler'''
+
     item = session.query(Item).filter_by(id=item_id).one()
     item.name = request.form['name']
     item.description = request.form['description']
@@ -116,11 +127,15 @@ def item_delete(item_id):
         return item_delete_get(item_id)
 
 def item_delete_get(item_id):
+    '''item_delete GET handler'''
+
     item = session.query(Item).filter_by(id=item_id).one()
     flash('<strong>Danger!</strong> This action can not be reverted!', 'danger')
     return render_template('itemView.html', item=item, delete=True)
 
 def item_delete_post(item_id):
+    '''item_delete POST handler'''
+
     item = session.query(Item).filter_by(id=item_id).one()
     session.delete(item)
     session.commit()

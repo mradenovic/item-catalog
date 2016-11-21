@@ -1,3 +1,5 @@
+'''Create and configure Flask app'''
+
 from flask import Flask
 import config
 

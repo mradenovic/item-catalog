@@ -1,3 +1,9 @@
+'''Authentication and authorization
+
+This module contains all authentication and authorization methods.
+
+'''
+
 from catalog import app
 import config
 
@@ -42,6 +48,8 @@ def logout():
 
 @app.route('/login/authorized')
 def authorized():
+    '''Callback function to be executed after authentication with google'''
+
     resp = google.authorized_response()
     if resp is None:
         return 'Access denied: reason=%s error=%s' % (
@@ -88,6 +96,18 @@ def get_user_id(session):
             return None
 
 def authenticate(f):
+    '''View decorator that authenticates user.
+
+    User is authenticated if user is logged in.
+    Args:
+        f: Function to decorate.
+
+    Returns:
+        Decorated function if user is logged in, redirect to login if
+        user is not logged in.
+
+    '''
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user' not in session:
@@ -97,6 +117,18 @@ def authenticate(f):
     return decorated_function
 
 def authorize(f):
+    '''View decorator that authorizes user.
+
+    User is authorized if user is owner of the item.
+    Args:
+        f: Function to decorate.
+
+    Returns:
+        Decorated function if user is athorized, redirect to item_view if
+        user is not authorized.
+
+    '''
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         item_id = kwargs['item_id']
