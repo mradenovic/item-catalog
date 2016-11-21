@@ -17,7 +17,7 @@ def catalog():
     return render_template('catalog.html', categories=categories, items=items, items_title='Latest')
 
 
-@app.route('/catalog.json')
+@app.route('/catalog/json')
 def catalog_jsonified():
     return jsonify(Category=[i.serialize for i in categories])
 
