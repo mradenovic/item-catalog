@@ -63,7 +63,7 @@ def get_google_oauth_token():
 
 
 def create_user(session):
-    user = User(name=session['username']['name'], email=session['user'][
+    user = User(name=session['user']['name'], email=session['user'][
                    'email'], picture=session['user']['picture'])
     db.add(user)
     db.commit()
