@@ -12,6 +12,5 @@ class ItemForm(Form):
 def flash_form_errors(form):
     for field_name in form.errors:
         label = form[field_name].label
-        print form[field_name].label
         for error in list(form.errors[field_name]):
             flash('<strong>%s</strong>: %s!' % (label, error), 'danger')
