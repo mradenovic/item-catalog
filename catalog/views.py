@@ -59,6 +59,7 @@ def item_new():
     else:
         return item_new_get(form)
 
+
 def item_new_get(form):
     '''item_new GET handler'''
 
@@ -68,6 +69,7 @@ def item_new_get(form):
     params['cancel_url'] = url_for('catalog')
     flash_form_errors(form)
     return render_template('itemEditForm.html', **params)
+
 
 def item_new_post(form):
     '''item_new POST handler'''
@@ -83,6 +85,7 @@ def item_new_post(form):
     session.commit()
     flash('New Item <strong>%s</strong> Successfully Created!' % (item.name), 'success')
     return redirect(url_for('item_view', item_id=item.id))
+
 
 @app.route('/catalog/item/<int:item_id>')
 @validate_record('Item')
@@ -104,6 +107,7 @@ def item_edit(item_id):
     else:
         return item_edit_get(form, item)
 
+
 def item_edit_get(form, item):
     '''item_edit GET handler'''
 
@@ -113,6 +117,7 @@ def item_edit_get(form, item):
     params['cancel_url'] = url_for('item_view', item_id=item.id)
     flash_form_errors(form)
     return render_template('itemEditForm.html', **params)
+
 
 def item_edit_post(form, item):
     '''item_edit POST handler'''
@@ -137,12 +142,14 @@ def item_delete(item_id):
     else:
         return item_delete_get(item_id)
 
+
 def item_delete_get(item_id):
     '''item_delete GET handler'''
 
     item = session.query(Item).filter_by(id=item_id).one()
     flash('<strong>Danger!</strong> This action can not be reverted!', 'danger')
     return render_template('itemView.html', item=item, delete=True)
+
 
 def item_delete_post(item_id):
     '''item_delete POST handler'''
