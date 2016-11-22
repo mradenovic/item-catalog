@@ -4,7 +4,7 @@
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{item.name}}  <small>{{item.category.name}}</small> <span class="badge">{{item.price}}
+        {{item.name}}  <small>{{item.category.name}}</small> <span class="badge">${{item.price | round(2)}}
       </h3>
     </div>
     <div class="panel-body">
