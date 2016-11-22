@@ -9,6 +9,7 @@ from db_setup import Category, Item, User
 from auth import authenticate, authorize
 from auth import get_user_id
 from validate import validate_record
+from forms import ItemForm, flash_form_errors
 
 
 categories = session.query(Category).order_by(Category.name.desc())
@@ -51,29 +52,31 @@ def category_view(category_id):
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
 @authenticate
 def item_new():
-    if request.method == 'POST':
-        return item_new_post()
+    form = ItemForm(request.form)
+    form.category_id.choices = [(cat.id, cat.name) for cat in categories]
+    if request.method == 'POST' and form.validate():
+        return item_new_post(form)
     else:
-        return item_new_get()
+        return item_new_get(form)
 
-def item_new_get():
+def item_new_get(form):
     '''item_new GET handler'''
 
     params = {}
-    params['categories'] = categories
-    params['item'] = None
+    params['form'] = form
     params['action'] = 'New'
     params['cancel_url'] = url_for('catalog')
-    return render_template('itemForm.html', **params)
+    flash_form_errors(form)
+    return render_template('itemEditForm.html', **params)
 
-def item_new_post():
+def item_new_post(form):
     '''item_new POST handler'''
 
     params = {}
-    params['name'] = request.form['name']
-    params['description'] = request.form['description']
-    params['price'] = request.form['price']
-    params['category_id'] = request.form['category_id']
+    params['name'] = form.name.data
+    params['description'] = form.description.data
+    params['price'] = str(form.price.data)
+    params['category_id'] = form.category_id.data
     params['user_id'] = get_user_id(login_session)
     item = Item(**params)
     session.add(item)
