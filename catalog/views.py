@@ -8,6 +8,7 @@ from flask import flash
 from db_setup import Category, Item, User
 from auth import authenticate, authorize
 from auth import get_user_id
+from validate import validate_record
 
 
 categories = session.query(Category).order_by(Category.name.desc())
@@ -26,18 +27,21 @@ def catalog_jsonified():
 
 
 @app.route('/catalog/item/<int:item_id>/json')
+@validate_record('Item')
 def item_jsonfied(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return jsonify(Item=item.serialize)
 
 
 @app.route('/catalog/category/<int:category_id>/json')
+@validate_record('Category')
 def category_jsonfied(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     return jsonify(Category=category.serialize)
 
 
 @app.route('/catalog/category/<int:category_id>')
+@validate_record('Category')
 def category_view(category_id):
     items = session.query(Item).filter_by(category_id=category_id).order_by(Item.name)
     category = session.query(Category).filter_by(id=category_id).one()
@@ -78,12 +82,14 @@ def item_new_post():
     return redirect(url_for('item_view', item_id=item.id))
 
 @app.route('/catalog/item/<int:item_id>')
+@validate_record('Item')
 def item_view(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('itemView.html', item=item)
 
 
 @app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'POST'])
+@validate_record('Item')
 @authenticate
 @authorize
 def item_edit(item_id):
@@ -118,6 +124,7 @@ def item_edit_post(item_id):
 
 
 @app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'POST'])
+@validate_record('Item')
 @authenticate
 @authorize
 def item_delete(item_id):
