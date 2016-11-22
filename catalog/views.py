@@ -96,30 +96,32 @@ def item_view(item_id):
 @authenticate
 @authorize
 def item_edit(item_id):
-    if request.method == 'POST':
-        return item_edit_post(item_id)
+    item = session.query(Item).filter_by(id=item_id).one()
+    item.price = float(item.price)
+    form = ItemForm(request.form, item)
+    form.category_id.choices = [(cat.id, cat.name) for cat in categories]
+    if request.method == 'POST' and form.validate():
+        return item_edit_post(form, item)
     else:
-        return item_edit_get(item_id)
+        return item_edit_get(form, item)
 
-def item_edit_get(item_id):
+def item_edit_get(form, item):
     '''item_edit GET handler'''
 
-    item = session.query(Item).filter_by(id=item_id).one()
     params = {}
-    params['categories'] = categories
-    params['item'] = item
+    params['form'] = form
     params['action'] = 'Edit'
-    params['cancel_url'] = url_for('item_view', item_id=item_id)
-    return render_template('itemForm.html', **params)
+    params['cancel_url'] = url_for('item_view', item_id=item.id)
+    flash_form_errors(form)
+    return render_template('itemEditForm.html', **params)
 
-def item_edit_post(item_id):
+def item_edit_post(form, item):
     '''item_edit POST handler'''
 
-    item = session.query(Item).filter_by(id=item_id).one()
-    item.name = request.form['name']
-    item.description = request.form['description']
-    item.price = request.form['price']
-    item.category_id = request.form['category_id']
+    item.name = form.name.data
+    item.description = form.description.data
+    item.price = str(form.price.data)
+    item.category_id = form.category_id.data
     session.add(item)
     session.commit()
     flash('Item <strong>%s</strong> Successfully Updated!' % (item.name), 'success')
