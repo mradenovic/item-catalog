@@ -1,3 +1,5 @@
+'''Form validation'''
+
 from wtforms import Form, SelectField, StringField, TextAreaField, DecimalField, validators
 from flask import flash
 
