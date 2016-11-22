@@ -75,7 +75,7 @@ def item_new_post(form):
     params = {}
     params['name'] = form.name.data
     params['description'] = form.description.data
-    params['price'] = str(form.price.data)
+    params['price'] = form.price.data
     params['category_id'] = form.category_id.data
     params['user_id'] = get_user_id(login_session)
     item = Item(**params)
@@ -97,7 +97,6 @@ def item_view(item_id):
 @authorize
 def item_edit(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
-    item.price = float(item.price)
     form = ItemForm(request.form, item)
     form.category_id.choices = [(cat.id, cat.name) for cat in categories]
     if request.method == 'POST' and form.validate():
@@ -120,7 +119,7 @@ def item_edit_post(form, item):
 
     item.name = form.name.data
     item.description = form.description.data
-    item.price = str(form.price.data)
+    item.price = form.price.data
     item.category_id = form.category_id.data
     session.add(item)
     session.commit()
