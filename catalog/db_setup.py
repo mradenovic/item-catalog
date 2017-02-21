@@ -1,13 +1,12 @@
 '''Create and setup database models'''
 
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Numeric
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
 from sqlalchemy.sql import func
+from db import engine
+from db import Base
 
-
-Base = declarative_base()
+# Base = declarative_base()
 
 
 class User(Base):
@@ -50,7 +49,7 @@ class Item(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
-    price = Column(Numeric(precision=2))
+    price = Column(Numeric(6,2))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
@@ -67,9 +66,6 @@ class Item(Base):
             'description': self.description,
             'price': self.price
         }
-
-
-engine = create_engine('sqlite:///itemcatalog.db')
 
 
 Base.metadata.create_all(engine)
